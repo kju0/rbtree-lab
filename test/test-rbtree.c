@@ -313,12 +313,14 @@ void test_to_array_suite() {
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_insert(t, arr[i]);
+    //printf("%d %d\n", i, p->key);
     assert(p != NULL);
   }
 
+
   for (int i = 0; i < n; i++) {
     node_t *p = rbtree_find(t, arr[i]);
-    // printf("arr[%d] = %d\n", i, arr[i]);
+    //printf("arr[%d] = %d, find result = %d\n", i, arr[i], p->key);
     assert(p != NULL);
     assert(p->key == arr[i]);
     rbtree_erase(t, p);
