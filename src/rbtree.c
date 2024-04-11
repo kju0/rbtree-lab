@@ -4,8 +4,9 @@
 #include <stdio.h>
 
 rbtree *new_rbtree(void) {
+  // TODO: rbtree와 nilnode 메모리 할당 및 초기화하는 함수
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-  // TODO: initialize struct if needed
+
   node_t *nilNode = (node_t *)calloc(1, sizeof(node_t));
   
   nilNode->color = RBTREE_BLACK;
@@ -16,56 +17,56 @@ rbtree *new_rbtree(void) {
 }
 
 void right_rotation(rbtree * tree, node_t * x){
-    // TODO!
+  // TODO: 타겟 노드 x의 왼쪽 자식을 타겟 노드 x를 오른쪽 부모로 갖는 부모로 바꿔주는 함수
 
-    node_t *y;
+  node_t *y;
 
-    // 1. target의 left으로 y 설정
-    y = x->left;
-    // 2. y의 오른쪽 서브트리를 target의 왼쪽 서브트리로 옮김
-    x->left = y->right;
-    // 3. y의 오른쪽 노드가 NIL이 아니라면, y의 오른쪽 노드 부모를 target으로 설정
-    if (y->right != tree->nil) {
-        y->right->parent = x;
-    }
-    // 4. y의 부모 노드를 target의 부모 노드로 설정
-    y->parent = x->parent;
-    // 5. target의 부모 노드가 nil이라면, 트리 구조체의 root를 y로 설정
-    if (x->parent == tree->nil)
-        tree->root = y;
-    // 6. target이 target 부모 노드의 왼쪽이면, target 부모의 왼쪽을 y로 설정
-    else if (x == x->parent->left)
-        x->parent->left = y;
-    // 7. target이 target 부모 노드의 오른쪽이면, target 부모의 오른쪽을 y로 설정
-    else
-        x->parent->right = y;
-    // 8. target을 y의 오른쪽으로 설정
-    y->right = x;
-    // 9. target의 부모를 y로 설정
-    x->parent = y;
+  // 1. target의 left으로 y 설정
+  y = x->left;
+  // 2. y의 오른쪽 서브트리를 target의 왼쪽 서브트리로 옮김
+  x->left = y->right;
+  // 3. y의 오른쪽 노드가 NIL이 아니라면, y의 오른쪽 노드 부모를 target으로 설정
+  if (y->right != tree->nil) {
+    y->right->parent = x;
+  }
+  // 4. y의 부모 노드를 target의 부모 노드로 설정
+  y->parent = x->parent;
+  // 5. target의 부모 노드가 nil이라면, 트리 구조체의 root를 y로 설정
+  if (x->parent == tree->nil)
+    tree->root = y;
+  // 6. target이 target 부모 노드의 왼쪽이면, target 부모의 왼쪽을 y로 설정
+  else if (x == x->parent->left)
+    x->parent->left = y;
+  // 7. target이 target 부모 노드의 오른쪽이면, target 부모의 오른쪽을 y로 설정
+  else
+    x->parent->right = y;
+  // 8. target을 y의 오른쪽으로 설정
+  y->right = x;
+  // 9. target의 부모를 y로 설정
+  x->parent = y;
 }
 
 void left_rotation(rbtree * tree, node_t * x){
-    // TODO!
-    node_t *y;
+  // TODO: 타겟 노드 x의 오른쪽 자식을 타겟 노드 x를 왼쪽 부모로 갖는 부모로 바꿔주는 함수
+  node_t *y;
 
-    y = x->right;
-    x->right = y->left;
-    
-    if (y->left != tree->nil) 
-        y->left->parent = x;
-    
-    y->parent = x->parent;
-    
-    if (x->parent == tree->nil) 
-        tree->root = y;
-    else if (x == x->parent->left)
-        x->parent->left = y;
-    else 
-        x->parent->right = y;
+  y = x->right;
+  x->right = y->left;
+  
+  if (y->left != tree->nil) 
+    y->left->parent = x;
+  
+  y->parent = x->parent;
+  
+  if (x->parent == tree->nil) 
+    tree->root = y;
+  else if (x == x->parent->left)
+    x->parent->left = y;
+  else 
+    x->parent->right = y;
 
-    y->left = x;
-    x->parent = y;
+  y->left = x;
+  x->parent = y;
 }
 
 void free_node(rbtree *t, node_t *x) {
@@ -87,6 +88,8 @@ void delete_rbtree(rbtree *t) {
 }
 
 void rbtree_insert_fixup(rbtree *t, node_t *z) {
+  // TODO: 삽입 후 삽입한 노드부터 root까지 탐색하며 
+  // 레드블랙트리 규칙 준수 여부 검사 및 회전, 색칠 재조정하는 함수
   node_t *y;
   
   while (z->parent->color == RBTREE_RED) {
@@ -141,7 +144,7 @@ void rbtree_insert_fixup(rbtree *t, node_t *z) {
 }
 
 node_t *rbtree_insert(rbtree *t, const key_t key) {
-  // TODO: implement insert
+  // TODO: 이진탐색트리 삽입과 같이 새로운 노드를 삽입하는 함수
   node_t *y = t->nil;
   node_t *x = t->root;
   node_t *z = (node_t *)calloc(1, sizeof(node_t));
@@ -178,7 +181,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key) {
-  // TODO: implement find
+  // TODO: rbtree에서 key값을 갖는 노드가 있으면 해당 노드 리턴, 없으면 NULL 리턴
   node_t * current = t->root;
 
   while (current != t->nil) {
@@ -222,6 +225,7 @@ node_t *rbtree_max(const rbtree *t) {
 }
 
 void rbtree_transplant(rbtree *t, node_t * u, node_t * v) {
+  // TODO: 노드 u의 부모의 자식으로 노드 v로 바꿔주는 함수
   if (u->parent == t->nil) {
     t->root = v;
   }
@@ -236,6 +240,7 @@ void rbtree_transplant(rbtree *t, node_t * u, node_t * v) {
 }
 
 void rbtree_delete_fixup(rbtree *t, node_t *x) {
+  // TODO: 삭제한 노드 x 부터 레드블랙트리 규칙을 준수하지 않았는지 검사하고 재조정하는 함수
   while (x != t->root && x->color == RBTREE_BLACK) {
     // CASE 1 ~ 4 : LEFT CASE
     if (x == x->parent->left){
@@ -258,10 +263,10 @@ void rbtree_delete_fixup(rbtree *t, node_t *x) {
       // CASE 3 : x의 형제 w는 흑색, w의 왼쪽 자식은 적색, w의 오른쪽 자신은 흑색인 경우
       else{ 
         if (w->right->color == RBTREE_BLACK) {
-            w->left->color = RBTREE_BLACK;
-            w->color = RBTREE_RED;
-            right_rotation(t, w);
-            w = x->parent->right;
+          w->left->color = RBTREE_BLACK;
+          w->color = RBTREE_RED;
+          right_rotation(t, w);
+          w = x->parent->right;
         }
 
         // CASE 4 : x의 형제 w는 흑색이고 w의 오른쪽 자식은 적색인 경우
@@ -293,12 +298,12 @@ void rbtree_delete_fixup(rbtree *t, node_t *x) {
       // CASE 7 : x의 형제 w는 흑색, w의 왼쪽 자식은 적색, w의 오른쪽 자신은 흑색인 경우
       else 
       {
-          if (w->left->color == RBTREE_BLACK) {
-            w->right->color = RBTREE_BLACK;
-            w->color = RBTREE_RED;
-            left_rotation(t, w);
-            w = x->parent->left;
-            }
+        if (w->left->color == RBTREE_BLACK) {
+          w->right->color = RBTREE_BLACK;
+          w->color = RBTREE_RED;
+          left_rotation(t, w);
+          w = x->parent->left;
+        }
 
         // CASE 8 : x의 형제 w는 흑색이고 w의 오른쪽 자식은 적색인 경우
         w->color = x->parent->color;
@@ -314,13 +319,13 @@ void rbtree_delete_fixup(rbtree *t, node_t *x) {
 }
 
 int rbtree_erase(rbtree *t, node_t *p) {
-  // TODO: RB tree 내부의 ptr로 지정된 node를 삭제하고 메모리 반환
+  // TODO: RB tree 내부의 ptr로 지정된 node를 삭제하고 메모리 반환하는 함수
   node_t *y;
   node_t *x;
-  color_t yOriginalColor;
+  color_t y_origin_color;
 
   y = p;
-  yOriginalColor = y->color;
+  y_origin_color = y->color;
 
   if (p->left == t->nil) {
     x = p->right;
@@ -335,7 +340,7 @@ int rbtree_erase(rbtree *t, node_t *p) {
     while(y->left != t->nil){
       y = y->left;
     }
-    yOriginalColor = y->color;
+    y_origin_color = y->color;
     x = y->right;
 
     if (y->parent == p) {
@@ -353,7 +358,7 @@ int rbtree_erase(rbtree *t, node_t *p) {
     y->color = p->color;
   }
 
-  if (yOriginalColor == RBTREE_BLACK) {
+  if (y_origin_color == RBTREE_BLACK) {
     rbtree_delete_fixup(t, x);
   }
 
@@ -363,6 +368,7 @@ int rbtree_erase(rbtree *t, node_t *p) {
 }
 
 void subtree_to_array(const rbtree *t, node_t *curr, key_t *arr, size_t n, size_t *count) {
+  // TODO: 키 순서대로 배열을 반환하기 위해 중위순회하는 함수
   if (curr == t->nil) {
     return;
   }
@@ -377,7 +383,7 @@ void subtree_to_array(const rbtree *t, node_t *curr, key_t *arr, size_t n, size_
 }
 
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  // TODO: key 순서대로 배열 만들어서 반환
+  // TODO: key 순서대로 배열 만들어서 반환하는 함수
   if (t->root == t->nil) {
     return 0;
   }
